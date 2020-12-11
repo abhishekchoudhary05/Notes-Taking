@@ -34,9 +34,11 @@
         <h1>Welcome to the Magic Notes Application</h1>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Add a Note</h5>
                 <div class="form-group">
-                    <textarea id="inputTextArea" class="form-control" rows="3"></textarea>
+                    <h6>Title</h6>
+                    <input type="text" class="form-control" id="titleNote" aria-describedby="title" placeholder="Title of Note"><br>
+                    <h6>Description</h6>
+                    <textarea id="inputTextArea" class="form-control" rows="3" placeholder="Description of Note"></textarea>
                 </div>
                 <button id="addButton" class="btn btn-primary">Add Note</button>
             </div>

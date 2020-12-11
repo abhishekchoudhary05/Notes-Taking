@@ -1,10 +1,25 @@
 console.log("welcome to the App's Console.");
 ShowAllNotes();
 
+let note = {
+    title : "",
+    text : ""
+};
+
+function AddNote(title, txt){
+    this.title = title;
+    this.text = txt;
+}
+
 //what will happen when we will click add notes
 let button = window.document.getElementById("addButton");
 button.addEventListener("click", function(ele){
+    //fetching and creting new object for new note
     let txt = window.document.getElementById("inputTextArea");
+    let title = window.document.getElementById("titleNote");
+    newNote = new AddNote(title.value, txt.value);
+    // console.log(JSON.stringify(newNote));
+
     let nodes = window.localStorage.getItem("notes");
     if (nodes == null){
         lStorage = [];
@@ -12,10 +27,10 @@ button.addEventListener("click", function(ele){
     else{
         lStorage = JSON.parse(nodes);
     }
-    // console.log(lStorage);
-    lStorage.push(txt.value);
-    // console.log(lStorage);
-    window.localStorage.setItem("notes", JSON.stringify(lStorage));
+
+    lStorage.push(JSON.stringify(newNote)); //add to array
+    window.localStorage.setItem("notes", JSON.stringify(lStorage)); //add array to local storage
+    title.value = "";
     txt.value = "";
     ShowAllNotes();
 });
@@ -32,22 +47,24 @@ function ShowAllNotes(){
 
     let html = '';
     Array.from(lStorage).forEach(function(element, index){
+        element = JSON.parse(element);
         html = html + `
             <div class="noteCard mx-2 my-2 card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">${index+1}</h5>
-                <p class="card-text">${element}</p>
+                <h5 class="card-title">${element.title}</h5>
+                <p class="card-text">${element.text}</p>
                 <a index="${index}" onclick="deleteNote(this.index)" class="btn btn-primary">Delete Note</a>
             </div>
             </div>        
         `;
     });
+    
     let notes = window.document.getElementById("notes");
     if(lStorage != 0 ){
         notes.innerHTML = html;
     }
     else{
-        notes.innerHTML = `<b>There is no any notes to display. please create one.</b>`;
+        notes.innerHTML = `<b>There is no any notes to display. please add one.</b>`;
     }
 }
 
